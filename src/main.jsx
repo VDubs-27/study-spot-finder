@@ -9,9 +9,9 @@ import App from './App.jsx'
 import './index.css'
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <MantineProvider defaultColorScheme="light" theme={{ fontFamily: 'Manrope, sans-serif' }}>
-      <App />
-    </MantineProvider>
-  </StrictMode>,
+    <StrictMode>
+        <MantineProvider defaultColorScheme="light" theme={{ fontFamily: 'Manrope, sans-serif' }}>
+            <App />
+        </MantineProvider>
+    </StrictMode>,
 )

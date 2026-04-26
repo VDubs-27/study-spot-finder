@@ -13,3 +13,8 @@ body,
 *::after {
     font-family: "Manrope", sans-serif !important;
 }
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
