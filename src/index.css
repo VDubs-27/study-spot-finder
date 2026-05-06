@@ -23,3 +23,8 @@ body,
   from { opacity: 1; }
   to { opacity: 0; }
 }
+
+.icon-wrapper .icon-filled { display: none; }
+.icon-wrapper:hover .icon-filled { display: inline-block; }
+.icon-wrapper:hover .icon-outlined { display: none; }
+.icon-wrapper { cursor: pointer; }

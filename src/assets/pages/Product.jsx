@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from 'react';
-import { IconArrowRight, IconSearch, IconX } from '@tabler/icons-react';
-import { ActionIcon, TextInput, useMantineTheme } from '@mantine/core';
+import { IconArrowRight, IconLayoutGrid, IconLayoutGridFilled, IconLayoutList, IconLayoutListFilled, IconSearch, IconX } from '@tabler/icons-react';
+import { Tooltip, ActionIcon, TextInput, useMantineTheme } from '@mantine/core';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import Navigation from "../components/Navigation"
@@ -16,6 +16,8 @@ export default function Product() {
     const [showSuggestions, setShowSuggestions] = useState(true);
     const [isFadingOut, setIsFadingOut] = useState(false);
     const hideTimerRef = useRef(null);
+
+    const [gridMode, setGridMode] = useState(true);
 
     // Initialise Map
     useEffect(() => {
@@ -122,9 +124,8 @@ export default function Product() {
                     )}
                 </div>
 
-                <div className="flex flex-row items-start justify-center gap-10 w-full">
-                    <div className="w-1/2 h-[500px] min-h-[500px] block rounded-2xl overflow-hidden border-4 border-white shadow-xl relative bg-neutral-200">
-
+                <div className="flex flex-col gap-10 w-full items-start justify-center lg:flex-row">
+                    <div className="w-full h-[500px] min-h-[500px] block rounded-2xl overflow-hidden border-4 border-white shadow-xl relative bg-neutral-200">
                         {/* The Map Target - Absolute fill ensures it stretches to the parent's 500px */}
                         <div
                             ref={mapContainerRef}
@@ -133,7 +134,35 @@ export default function Product() {
 
                     </div>
                     {/* Placeholder for a grid of study spot in card form */}
-                    <div className="w-1/2 h-[500px] min-h-[500px] block rounded-2xl overflow-hidden border-4 border-white shadow-xl relative bg-neutral-200">
+                    <div className="w-full h-[500px] min-h-[500px] block rounded-2xl overflow-hidden border-4 border-white shadow-xl relative bg-neutral-200">
+                        {/* Div to toggle view of all cards */}
+                        <div className="absolute top-4 right-4 z-10">
+                            <Tooltip label={gridMode ? "Switch to list view" : "Switch to grid view"} withArrow>
+                                <ActionIcon
+                                    size={30}
+                                    radius="xl"
+                                    color={theme.primaryColor}
+                                    variant="filled"
+                                    aria-label="Toggle to grid view"
+                                >
+
+                                    {gridMode ? (
+                                        <span className="icon-wrapper transition-transform duration-500 hover:rotate-180" onClick={() => setGridMode(false)}>
+                                            <IconLayoutList size={18} stroke={1.5} className="icon-outlined" />
+                                            <IconLayoutListFilled size={18} stroke={1.5} className="icon-filled" />
+                                        </span>
+                                    ) : (
+                                        <span className="icon-wrapper transition-transform duration-500 hover:rotate-180" onClick={() => setGridMode(true)}>
+                                            <IconLayoutGrid size={18} stroke={1.5} className="icon-outlined" />
+                                            <IconLayoutGridFilled size={18} stroke={1.5} className="icon-filled" />
+                                        </span>
+                                    )
+                                    }
+
+                                </ActionIcon>
+                            </Tooltip>
+                        </div>
+                        {/* Example card */}
                         <div className="flex flex-col items-start gap-1 p-6">
                             <h2 className="text-2xl font-bold text-neutral-800">General Library</h2>
                             <p className="text-neutral-600">A quiet place with plenty of seating and power outlets.</p>
