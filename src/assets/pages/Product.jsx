@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from 'react';
-import { IconArrowRight, IconLayoutGrid, IconLayoutGridFilled, IconLayoutList, IconLayoutListFilled, IconSearch, IconX } from '@tabler/icons-react';
+import { IconArrowRight, IconLayoutGrid, IconLayoutGridFilled, IconLayoutList, IconLoader2, IconLayoutListFilled, IconSearch, IconX } from '@tabler/icons-react';
 import { Tooltip, ActionIcon, TextInput, useMantineTheme } from '@mantine/core';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
@@ -18,6 +18,7 @@ export default function Product() {
     const hideTimerRef = useRef(null);
 
     const [gridMode, setGridMode] = useState(true);
+    const [mapLoading, setMapLoading] = useState(true);
 
     // Initialise Map
     useEffect(() => {
@@ -35,17 +36,21 @@ export default function Product() {
             accessToken: mapboxToken,
         })
 
+        mapRef.current = map;
+
         map.on('load', () => {
             const studySpots = [
-                { name: 'General Library', coordinates: [174.768, -36.852] },
-                { name: 'Engineering Block', coordinates: [174.763, -36.854] },
+                { name: 'General Library', coordinates: [174.769330, -36.851240] },
+                { name: 'Engineering Block', coordinates: [174.770031, -36.852629] },
             ];
 
             studySpots.forEach(spot => {
                 new mapboxgl.Marker({ color: '#228be6' })
                     .setLngLat(spot.coordinates)
-                    .addTo(mapRef);
+                    .addTo(map);
             });
+
+            setMapLoading(false);
         });
 
         return () => {
@@ -54,7 +59,6 @@ export default function Product() {
                 mapRef.current = null;
             }
         }
-
     }, []);
 
     function toggleSuggestions() {
@@ -89,7 +93,7 @@ export default function Product() {
                             <ActionIcon
                                 size={36}
                                 radius="xl"
-                                color={theme.primaryColor}
+                                color="gray.6"
                                 variant="filled"
                                 aria-label="Search"
                             >
@@ -126,6 +130,14 @@ export default function Product() {
 
                 <div className="flex flex-col gap-10 w-full items-start justify-center lg:flex-row">
                     <div className="w-full h-[500px] min-h-[500px] block rounded-2xl overflow-hidden border-4 border-white shadow-xl relative bg-neutral-200">
+                        {mapLoading && (
+                            <div className="absolute inset-0 z-10 flex items-center justify-center bg-neutral-200/80 backdrop-blur-sm">
+                                <div className="flex flex-col items-center gap-3 text-neutral-700">
+                                    <IconLoader2 size={32} stroke={2} className="animate-spin" />
+                                    <span className="animate-pulse text-sm font-medium">Loading map...</span>
+                                </div>
+                            </div>
+                        )}
                         {/* The Map Target - Absolute fill ensures it stretches to the parent's 500px */}
                         <div
                             ref={mapContainerRef}
@@ -141,18 +153,19 @@ export default function Product() {
                                 <ActionIcon
                                     size={30}
                                     radius="xl"
-                                    color={theme.primaryColor}
+                                    color={theme.black}
                                     variant="filled"
                                     aria-label="Toggle to grid view"
+                                    onClick={gridMode ? () => setGridMode(false) : () => setGridMode(true)}
                                 >
 
                                     {gridMode ? (
-                                        <span className="icon-wrapper transition-transform duration-500 hover:rotate-180" onClick={() => setGridMode(false)}>
+                                        <span className="icon-wrapper transition-transform duration-500 hover:rotate-180">
                                             <IconLayoutList size={18} stroke={1.5} className="icon-outlined" />
                                             <IconLayoutListFilled size={18} stroke={1.5} className="icon-filled" />
                                         </span>
                                     ) : (
-                                        <span className="icon-wrapper transition-transform duration-500 hover:rotate-180" onClick={() => setGridMode(true)}>
+                                        <span className="icon-wrapper transition-transform duration-500 hover:rotate-180">
                                             <IconLayoutGrid size={18} stroke={1.5} className="icon-outlined" />
                                             <IconLayoutGridFilled size={18} stroke={1.5} className="icon-filled" />
                                         </span>

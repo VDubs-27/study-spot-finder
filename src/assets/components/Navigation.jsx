@@ -14,7 +14,7 @@ export default function Navigation({ currentPage }) {
     return (
         <nav className="flex flex-row items-center justify-between w-full py-4 px-24">
             <div className="flex items-center cursor-pointer" onClick={() => navigate('/')}>
-                <img src="/favicon.svg" alt="logo" className="inline-block w-6 h-6 mr-2" />
+                <img src="/unfilled_logo.png" alt="logo" className="inline-block w-10 h-10" />
                 <h1 className="text-xl font-bold text-neutral-800">Studious</h1>
             </div>
             <div className="flex flex-row items-center gap-6">
