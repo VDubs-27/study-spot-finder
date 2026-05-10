@@ -67,7 +67,7 @@ export default function Product() {
             description: "The Faculty of Arts Building is a historic study space with a vibrant atmosphere and excellent resources.",
             tags: ["🤝 Booths", "🖨️ Printing"],
             coordinates: [174.771394, -36.851285]
-        }
+        },
     ]
 
     const [showSuggestions, setShowSuggestions] = useState(true);
@@ -78,6 +78,7 @@ export default function Product() {
     const [mapLoading, setMapLoading] = useState(true);
 
     const [searchQuery, setSearchQuery] = useState('UoA City Campus');
+    const [displayedQuery, setDisplayedQuery] = useState('UoA City Campus');
 
     const [filteredResults, setFilteredResults] = useState(data);
 
@@ -134,6 +135,7 @@ export default function Product() {
 
     function searchSpots() {
         const q = searchQuery.trim().toLowerCase();
+        setDisplayedQuery(searchQuery);
         const results = data.filter(item =>
             item.name.toLowerCase().includes(q) ||
             item.description.toLowerCase().includes(q) ||
@@ -145,17 +147,17 @@ export default function Product() {
 
         // If we have a map and a known coordinate for the first result, fly to it
         if (results.length > 0 && mapRef.current) {
-            const sumX = results.reduce((acc, spot) => acc + spot.coordinates[0], 0);
-            const sumY = results.reduce((acc, spot) => acc + spot.coordinates[1], 0);
-            const coords = [sumX / results.length, sumY / results.length];
-            console.log(coords)
-            if (coords) {
-                try {
-                    mapRef.current.flyTo({ center: coords, zoom: 17 });
-                } catch (err) {
-                    console.warn('Map flyTo failed', err);
-                }
-            }
+            const bounds = new mapboxgl.LngLatBounds();
+
+            results.forEach(spot => {
+                bounds.extend(spot.coordinates);
+            });
+
+            mapRef.current.fitBounds(bounds, {
+                padding: 60,
+                maxZoom: 17,
+                duration: 1000,
+            });
         }
         // If no results, fly to original center of campus.
         else {
@@ -273,7 +275,7 @@ export default function Product() {
                         <div className="flex h-full min-h-0 flex-col p-3 pt-4">
                             <div className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden pr-2">
                                 <div className="text-lg font-medium text-neutral-800 mb-4">
-                                    Showing available study spots for <span className="font-bold">"{searchQuery}"</span>
+                                    Showing available study spots for <span className="font-bold">"{displayedQuery}"</span>
                                 </div>
                                 {gridMode ? (
                                     <GridView data={filteredResults} />
