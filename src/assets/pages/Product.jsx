@@ -31,6 +31,7 @@ export default function Product() {
     let selectedTags = []
 
     for (let i = 0; i < 3; i++) {
+        // eslint-disable-next-line react-hooks/purity
         const j = Math.floor(Math.random() * possibleTags.length);
         if (selectedTags.includes(possibleTags[j])) {
             i--;
@@ -116,7 +117,7 @@ export default function Product() {
                 mapRef.current = null;
             }
         }
-    }, []);
+    });
 
     function toggleSuggestions() {
         if (showSuggestions) {
