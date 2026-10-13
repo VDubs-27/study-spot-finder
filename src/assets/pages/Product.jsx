@@ -41,14 +41,14 @@ export default function Product() {
 
     const data = [
         {
-            image: "https://archipro.co.nz/images/s1/project/higher-education-and-research-facilities/UoA-B405Interior-New-Atrium-Terrace4-of-8-v4.jpg/eyJlZGl0cyI6W3sidHlwZSI6InpwY2YiLCJvcHRpb25zIjp7ImJveFdpZHRoIjoxOTIwLCJib3hIZWlnaHQiOjEyODAsImNvdmVyIjp0cnVlLCJ6b29tV2lkdGgiOjE5MjAsInNjcm9sbFBvc1giOjUwLCJzY3JvbGxQb3NZIjo1MCwiYmFja2dyb3VuZCI6InJnYigxNTEsMTM5LDExNykiLCJmaWx0ZXIiOjB9fV0sInF1YWxpdHkiOjg1fQ==",
+            image: "https://upload.wikimedia.org/wikipedia/commons/2/2a/University_of_Auckland_General_Library.JPG?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",
             name: "General Library",
             description: "The General Library is a popular study spot with a quiet atmosphere, making it ideal for focused work.",
             tags: ["💻 Computers", "🤫 Quiet"],
             coordinates: [174.769330, -36.851240]
         },
         {
-            image: "https://upload.wikimedia.org/wikipedia/commons/2/2a/University_of_Auckland_General_Library.JPG?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",
+            image: "https://archipro.co.nz/images/s1/project/higher-education-and-research-facilities/UoA-B405Interior-New-Atrium-Terrace4-of-8-v4.jpg/eyJlZGl0cyI6W3sidHlwZSI6InpwY2YiLCJvcHRpb25zIjp7ImJveFdpZHRoIjoxOTIwLCJib3hIZWlnaHQiOjEyODAsImNvdmVyIjp0cnVlLCJ6b29tV2lkdGgiOjE5MjAsInNjcm9sbFBvc1giOjUwLCJzY3JvbGxQb3NZIjo1MCwiYmFja2dyb3VuZCI6InJnYigxNTEsMTM5LDExNykiLCJmaWx0ZXIiOjB9fV0sInF1YWxpdHkiOjg1fQ==",
             name: "Engineering Block",
             description: "The Engineering Block offers a collaborative environment with ample seating and resources for group study sessions.",
             tags: ["🔌 Outlets", "🦉 Till Late"],
