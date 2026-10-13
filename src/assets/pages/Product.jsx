@@ -5,8 +5,7 @@ import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import Navigation from "../components/Navigation"
 import Tag from '../components/Tag';
-import GridView from '../components/GridView';
-import ListView from '../components/ListView';
+import SearchResults from '../components/SearchResults';
 
 const mapboxToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
@@ -278,11 +277,7 @@ export default function Product() {
                                 <div className="text-lg font-medium text-neutral-800 mb-4">
                                     Showing available study spots for <span className="font-bold">"{displayedQuery}"</span>
                                 </div>
-                                {gridMode ? (
-                                    <GridView data={filteredResults} />
-                                ) : (
-                                    <ListView data={filteredResults} />
-                                )}
+                                <SearchResults data={filteredResults} gridMode={gridMode} />
                             </div>
                         </div>
                     </div>

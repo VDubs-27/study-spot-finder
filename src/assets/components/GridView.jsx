@@ -1,6 +1,6 @@
 import GridItem from "./GridItem"
 
-export default function GridView({ data }) {
+export default function GridView({ data, onItemClick }) {
     return (
         <div className="grid w-full min-w-0 grid-cols-1 gap-4 xl:grid-cols-2 animate-[fadeIn_0.5s_ease-in-out_0s_forwards] opacity-0">
             {data.map((item, index) => (
@@ -10,6 +10,7 @@ export default function GridView({ data }) {
                     name={item.name}
                     description={item.description}
                     tags={item.tags}
+                    onClick={() => onItemClick(item)}
                 />
             ))}
         </div>

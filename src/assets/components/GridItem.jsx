@@ -1,15 +1,9 @@
 import Tag from "./Tag";
-import { useState } from "react";
 
-export default function GridItem({ image, name, description, tags }) {
-    const [expandedView, setExpandedView] = useState(false);
-
-    const toggleExpandedView = () => {
-        setExpandedView(!expandedView);
-    };
+export default function GridItem({ image, name, description, tags, onClick }) {
 
     return (
-        <div onClick={toggleExpandedView} className={`flex w-full min-w-0 flex-col items-center gap-4 rounded-md bg-white p-4 shadow transition-all duration-300 ease-in-out hover:scale-[1.02] hover:bg-cyan-50 cursor-pointer`}>
+        <div onClick={onClick} className={`flex w-full min-w-0 flex-col items-center gap-4 rounded-md bg-white p-4 shadow transition-all duration-300 ease-in-out hover:scale-[1.02] hover:bg-cyan-50 cursor-pointer`}>
             <div className="flex min-w-0 flex-col items-start">
                 <div className="flex flex-col gap-2">
                     <div className="w-full overflow-hidden rounded-md aspect-[16/10] bg-neutral-200">
