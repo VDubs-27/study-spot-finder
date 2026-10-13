@@ -1,7 +1,10 @@
 import { useEffect } from "react";
 import Tag from "./Tag";
+import { ActionIcon } from '@mantine/core';
+import { IconX } from '@tabler/icons-react';
 
 export default function ExpandedItemView({ item, onClose }) {
+
     useEffect(() => {
         document.body.style.overflow = "hidden";
         return () => {
@@ -18,12 +21,18 @@ export default function ExpandedItemView({ item, onClose }) {
                 onClick={(e) => e.stopPropagation()}
                 className="relative flex w-full max-w-5xl h-full max-h-[85vh] md:max-h-[90vh] min-w-0 flex-col md:flex-row gap-6 rounded-lg bg-white p-6 md:p-8 shadow-xl overflow-y-auto md:overflow-hidden"
             >
-                <button
+                <ActionIcon
+                    style={{ position: 'absolute', top: '16px', right: '16px', zIndex: 50 }}
+                    className="transition-transform duration-300 ease-in-out hover:scale-110 shadow-md"
+                    size={36}
+                    radius="xl"
+                    color="white"
+                    variant="white"
+                    aria-label="Close expanded view"
                     onClick={onClose}
-                    className="absolute top-4 right-4 z-10 text-neutral-400 hover:text-neutral-600 text-xl font-bold bg-white/80 rounded-full w-8 h-8 flex items-center justify-center shadow-sm cursor-pointer transition-colors duration-200 ease-in-out hover:scale-[1.1]"
                 >
-                    ✕
-                </button>
+                    <IconX size={18} color="black" stroke={2.5} />
+                </ActionIcon>
 
                 <div className="w-full md:w-3/5 flex-shrink-0">
                     <div className="w-full h-full overflow-hidden rounded-md aspect-[16/10] md:aspect-auto md:h-full bg-neutral-200">
