@@ -2,7 +2,7 @@ import Tag from "./Tag";
 import { Tooltip, ActionIcon, useMantineTheme } from '@mantine/core';
 import { IconArrowsMaximize } from '@tabler/icons-react';
 
-export default function GridItem({ image, name, description, tags, onClick }) {
+export default function GridItem({ image, name, description, tags, onClick, onItemSelect }) {
     const theme = useMantineTheme();
 
     return (
@@ -27,7 +27,7 @@ export default function GridItem({ image, name, description, tags, onClick }) {
                 </Tooltip>
             </div>
 
-            <div className="flex min-w-0 flex-col items-start">
+            <div onClick={onItemSelect} className="flex min-w-0 flex-col items-start">
                 <div className="flex flex-col gap-2">
                     <div className="w-full overflow-hidden rounded-md aspect-[16/10] bg-neutral-200">
                         <img src={image} alt={name} className="h-full w-full object-cover" />

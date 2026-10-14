@@ -2,7 +2,7 @@ import Tag from "./Tag"
 import { Tooltip, ActionIcon, useMantineTheme } from '@mantine/core';
 import { IconArrowsMaximize } from '@tabler/icons-react';
 
-export default function ListItem({ name, description, tags, onClick }) {
+export default function ListItem({ name, description, tags, onClick, onItemSelect }) {
     const theme = useMantineTheme();
 
     return (
@@ -27,7 +27,7 @@ export default function ListItem({ name, description, tags, onClick }) {
                 </Tooltip>
             </div>
 
-            <div className="flex flex-col items-start">
+            <div onClick={onItemSelect} className="flex flex-col items-start">
                 <div className="flex flex-row items-center gap-2">
                     <span className="text-lg font-medium text-neutral-800">{name}</span>
                     <div className="flex flex-row items-center gap-2">

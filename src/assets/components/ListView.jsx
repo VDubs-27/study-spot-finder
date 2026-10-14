@@ -1,6 +1,6 @@
 import ListItem from "./ListItem";
 
-export default function ListView({data, onItemClick}) {
+export default function ListView({data, onItemClick, onItemSelect}) {
     return (
         <div className="flex flex-col gap-1 w-full animate-[fadeIn_0.5s_ease-in-out_0s_forwards] opacity-0">
             {data.map((item, index) => (
@@ -10,6 +10,7 @@ export default function ListView({data, onItemClick}) {
                     description={item.description}
                     tags={item.tags}
                     onClick={() => onItemClick(item)}
+                    onItemSelect={() => onItemSelect(item)}
                 />
             ))}
         </div>

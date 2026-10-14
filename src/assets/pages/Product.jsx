@@ -93,8 +93,15 @@ export default function Product() {
         const map = new mapboxgl.Map({
             container: mapContainerRef.current,
             style: 'mapbox://styles/mapbox/standard',
+            // config: {
+            //     basemap: {
+            //         theme: 'monochrome'
+            //     }
+            // },
             center: [174.770, -36.852],
-            zoom: 15,
+            zoom: 15.5,
+            pitch: 45,
+            bearing: -17,
             accessToken: mapboxToken,
         })
 
@@ -116,7 +123,7 @@ export default function Product() {
                 mapRef.current = null;
             }
         }
-    });
+    }, []);
 
     function toggleSuggestions() {
         if (showSuggestions) {
@@ -162,11 +169,19 @@ export default function Product() {
         // If no results, fly to original center of campus.
         else {
             try {
-                mapRef.current.flyTo({ center: [174.770, -36.852], zoom: 15 });
+                mapRef.current.flyTo({ center: [174.770, -36.852], zoom: 15.5, pitch: 45 });
             } catch (err) {
                 console.warn('Map flyTo failed', err);
             }
         }
+    }
+
+    // function studySpotClicked(spot) {
+    //     setSearchQuery(spot.name);
+    // }
+
+    const handleItemSelect = (item) => {
+        console.log("Selected item: ", item);
     }
 
     return (
@@ -277,7 +292,7 @@ export default function Product() {
                                 <div className="text-lg font-medium text-neutral-800 mb-4">
                                     Showing available study spots for <span className="font-bold">"{displayedQuery}"</span>
                                 </div>
-                                <SearchResults data={filteredResults} gridMode={gridMode} />
+                                <SearchResults data={filteredResults} gridMode={gridMode} onItemSelect={handleItemSelect} />
                             </div>
                         </div>
                     </div>
