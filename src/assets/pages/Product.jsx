@@ -163,6 +163,7 @@ export default function Product() {
             mapRef.current.fitBounds(bounds, {
                 padding: 60,
                 maxZoom: 17,
+                pitch: 60,
                 duration: 1000,
             });
         }
