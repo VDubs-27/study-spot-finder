@@ -3,7 +3,7 @@ import GridView from "./GridView";
 import ListView from "./ListView";
 import ExpandedItemView from "./ExpandedItemView";
 
-export default function SearchResults({ data, gridMode, onItemSelect }) {
+export default function SearchResults({ data, gridMode, selection }) {
     const [expandedView, setExpandedView] = useState(null);
 
     const handleOpenExpandedView = (item) => {
@@ -17,9 +17,9 @@ export default function SearchResults({ data, gridMode, onItemSelect }) {
     return (
         <div>
             {gridMode ? (
-                <GridView data={data} onItemClick={handleOpenExpandedView} onItemSelect={onItemSelect} />
+                <GridView data={data} onItemClick={handleOpenExpandedView} selection={selection} />
             ) : (
-                <ListView data={data} onItemClick={handleOpenExpandedView} onItemSelect={onItemSelect} />
+                <ListView data={data} onItemClick={handleOpenExpandedView} selection={selection} />
             )}
 
             {expandedView && (

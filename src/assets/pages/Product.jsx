@@ -81,6 +81,9 @@ export default function Product() {
     const [displayedQuery, setDisplayedQuery] = useState('UoA City Campus');
 
     const [filteredResults, setFilteredResults] = useState(data);
+    const [selectedItem, setSelectedItem] = useState(null);
+
+    const pins = useRef([]);
 
     // Initialise Map
     useEffect(() => {
@@ -109,9 +112,11 @@ export default function Product() {
 
         map.on('load', () => {
             data.forEach(spot => {
-                new mapboxgl.Marker({ color: '#228be6' })
+                const pin = new mapboxgl.Marker({ color: '#228be6' })
                     .setLngLat(spot.coordinates)
                     .addTo(map);
+
+                pins.current.push(pin);
             });
 
             setMapLoading(false);
@@ -124,6 +129,24 @@ export default function Product() {
             }
         }
     }, []);
+
+    useEffect(() => {
+        if (!pins.current.length) return;
+
+        pins.current.forEach(pin => {
+            const lngLat = pin.getLngLat();
+
+            if (selectedItem && selectedItem.coordinates &&
+                lngLat.lng === selectedItem.coordinates[0] &&
+                lngLat.lat === selectedItem.coordinates[1]) {
+
+                pin.getElement().classList.add('selected-pin');
+            } else {
+                pin.getElement().classList.remove('selected-pin');
+            }
+        });
+    }, [selectedItem]); // Triggers immediately when state changes
+
 
     function toggleSuggestions() {
         if (showSuggestions) {
@@ -182,7 +205,27 @@ export default function Product() {
     // }
 
     const handleItemSelect = (item) => {
-        console.log("Selected item: ", item);
+        setSelectedItem(item);
+        if (mapRef.current) {
+            mapRef.current.flyTo({
+                center: item.coordinates,
+                zoom: 17,
+                pitch: 60,
+                duration: 1000,
+            });
+        }
+    }
+
+    const handleItemUnselect = () => {
+        setSelectedItem(null);
+        if (mapRef.current) {
+            mapRef.current.flyTo({
+                center: [174.770, -36.852],
+                zoom: 15.5,
+                pitch: 45,
+                duration: 1000,
+            });
+        }
     }
 
     return (
@@ -293,7 +336,7 @@ export default function Product() {
                                 <div className="text-lg font-medium text-neutral-800 mb-4">
                                     Showing available study spots for <span className="font-bold">"{displayedQuery}"</span>
                                 </div>
-                                <SearchResults data={filteredResults} gridMode={gridMode} onItemSelect={handleItemSelect} />
+                                <SearchResults data={filteredResults} gridMode={gridMode} selection={{ current: selectedItem, select: handleItemSelect, unselect: handleItemUnselect }} />
                             </div>
                         </div>
                     </div>
