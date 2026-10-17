@@ -6,7 +6,7 @@ export default function ListItem({ item, isCurrentItem, onClick, onItemSelect, o
     const theme = useMantineTheme();
 
     return (
-        <div className="relative flex flex-row items-center gap-4 bg-white p-4 rounded-md shadow hover:bg-cyan-50 cursor-pointer hover:scale-[1.02] ease-in-out duration-300">
+        <div className={`relative flex flex-row items-center gap-4 bg-white p-4 rounded-md shadow ${isCurrentItem ? 'scale-[1.02] bg-selected' : 'hover:bg-cyan-50 hover:scale-[1.02]'} ease-in-out duration-300 cursor-pointer`}>
 
             <div className="absolute top-2 right-2 z-10 flex gap-2">
                 {isCurrentItem && (

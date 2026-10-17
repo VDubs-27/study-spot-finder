@@ -32,3 +32,7 @@ body,
 .selected-pin svg path {
     fill: #121439 !important;
 }
+
+.bg-selected {
+    background-color: #97ebc5 !important;
+}

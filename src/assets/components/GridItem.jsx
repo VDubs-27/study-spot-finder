@@ -6,7 +6,7 @@ export default function GridItem({ item, isCurrentItem, onClick, onItemSelect, o
     const theme = useMantineTheme();
 
     return (
-        <div className="group relative flex w-full min-w-0 flex-col items-center gap-4 rounded-md bg-white p-4 shadow transition-all duration-300 ease-in-out hover:scale-[1.02] hover:bg-cyan-50 cursor-pointer">
+        <div className={`group relative flex w-full min-w-0 flex-col items-center gap-4 rounded-md bg-white p-4 shadow transition-all duration-300 ease-in-out ${isCurrentItem ? 'scale-[1.02] bg-selected' : 'hover:bg-cyan-50 hover:scale-[1.02]'} cursor-pointer`}>
 
             <div className="absolute top-2 right-2 z-10">
                 <Tooltip label="Expand study spot" withArrow>
