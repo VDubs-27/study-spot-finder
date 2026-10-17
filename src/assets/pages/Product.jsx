@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from 'react';
-import { IconArrowRight, IconLayoutGrid, IconLayoutGridFilled, IconLayoutList, IconLoader2, IconLayoutListFilled, IconSearch, IconX, IconCurrentLocation } from '@tabler/icons-react';
+import { IconArrowRight, IconLayoutGrid, IconLayoutGridFilled, IconLayoutList, IconLoader2, IconLayoutListFilled, IconSearch, IconX, IconCurrentLocation, IconCurrentLocationFilled } from '@tabler/icons-react';
 import { Tooltip, ActionIcon, TextInput, useMantineTheme } from '@mantine/core';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
@@ -295,6 +295,24 @@ export default function Product() {
 
                 <div className="flex flex-col gap-10 w-full items-start justify-center lg:flex-row">
                     <div className="w-full h-[500px] min-h-[500px] block rounded-2xl overflow-hidden border-4 border-white shadow-xl relative bg-neutral-200">
+
+                        <div className="absolute top-2 left-2 z-20">
+                            <Tooltip label="Recenter map to show all results" withArrow>
+                                <ActionIcon
+                                    size={30}
+                                    radius="xl"
+                                    color={theme.black}
+                                    variant="filled"
+                                    aria-label="Recenter map to show all results"
+                                    onClick={() => fitMapToResults(filteredResults, selectedItem)}
+                                >
+                                    <span className="icon-wrapper transition-transform duration-100 hover:rotate-180">
+                                        <IconCurrentLocation size={18} stroke={1.5} className="icon-outlined" />
+                                        <IconCurrentLocationFilled size={18} stroke={1.5} className="icon-filled" />
+                                    </span>
+                                </ActionIcon>
+                            </Tooltip>
+                        </div>
                         {mapLoading && (
                             <div className="absolute inset-0 z-10 flex items-center justify-center bg-neutral-200/80 backdrop-blur-sm">
                                 <div className="flex flex-col items-center gap-3 text-neutral-700">
@@ -344,22 +362,6 @@ export default function Product() {
                                 <div className="flex flex-row items-center gap-2 mb-4">
                                     <div className="text-lg font-medium text-neutral-800">
                                         Showing available study spots for <span className="font-bold">"{displayedQuery}"</span>
-                                    </div>
-                                    <div className="text-sm text-neutral-600">
-                                        <Tooltip label="Recenter map to show all results" withArrow>
-                                            <ActionIcon
-                                                size={24}
-                                                radius="xl"
-                                                color={theme.black}
-                                                variant="filled"
-                                                aria-label="Recenter map to show all results"
-                                                onClick={() => fitMapToResults(filteredResults, selectedItem)}
-                                            >
-                                                <span className="icon-wrapper transition-transform duration-100 hover:rotate-180">
-                                                    <IconCurrentLocation size={14} stroke={1.5} className="icon-outlined" />
-                                                </span>
-                                            </ActionIcon>
-                                        </Tooltip>
                                     </div>
                                 </div>
                                 <SearchResults data={filteredResults} gridMode={gridMode} selection={{ current: selectedItem, select: handleItemSelect, unselect: handleItemUnselect }} />

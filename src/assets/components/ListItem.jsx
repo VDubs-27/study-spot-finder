@@ -1,6 +1,6 @@
 import Tag from "./Tag"
 import { Tooltip, ActionIcon, useMantineTheme } from '@mantine/core';
-import { IconArrowsMaximize, IconHandClickOff } from '@tabler/icons-react';
+import { IconHandClick, IconHandClickOff, IconZoomInArea, IconZoomInAreaFilled } from '@tabler/icons-react';
 
 export default function ListItem({ item, isCurrentItem, onClick, onItemSelect, onItemUnselect }) {
     const theme = useMantineTheme();
@@ -23,7 +23,8 @@ export default function ListItem({ item, isCurrentItem, onClick, onItemSelect, o
                             }}
                         >
                             <span className="icon-wrapper">
-                                <IconHandClickOff size={18} stroke={1.5} />
+                                <IconHandClick size={18} stroke={1.5} className="icon-outlined" />
+                                <IconHandClickOff size={18} stroke={1.5} className="icon-filled" />
                             </span>
                         </ActionIcon>
                     </Tooltip>
@@ -42,7 +43,8 @@ export default function ListItem({ item, isCurrentItem, onClick, onItemSelect, o
                         }}
                     >
                         <span className="icon-wrapper transition-transform duration-500">
-                            <IconArrowsMaximize size={18} stroke={1.5} className="icon-outlined" />
+                            <IconZoomInArea size={18} stroke={1.5} className="icon-outlined" />
+                            <IconZoomInAreaFilled size={18} stroke={1.5} className="icon-filled" />
                         </span>
                     </ActionIcon>
                 </Tooltip>
