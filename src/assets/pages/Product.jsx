@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from 'react';
-import { IconArrowRight, IconLayoutGrid, IconLayoutGridFilled, IconLayoutList, IconLoader2, IconLayoutListFilled, IconSearch, IconX } from '@tabler/icons-react';
+import { IconArrowRight, IconLayoutGrid, IconLayoutGridFilled, IconLayoutList, IconLoader2, IconLayoutListFilled, IconSearch, IconX, IconCurrentLocation } from '@tabler/icons-react';
 import { Tooltip, ActionIcon, TextInput, useMantineTheme } from '@mantine/core';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
@@ -163,17 +163,17 @@ export default function Product() {
         }
     }
 
-    function searchSpots() {
-        const q = searchQuery.trim().toLowerCase();
-        setDisplayedQuery(searchQuery);
-        const results = data.filter(item =>
-            item.name.toLowerCase().includes(q) ||
-            item.description.toLowerCase().includes(q) ||
-            item.tags.some(tag => tag.toLowerCase().includes(q))
-        );
+    function fitMapToResults(results, selectedItem) {
 
-        setFilteredResults(results);
-        console.log('searchSpots() results:', results);
+        if (selectedItem && selectedItem.coordinates && mapRef.current) {
+            mapRef.current.flyTo({
+                center: selectedItem.coordinates,
+                zoom: 17,
+                pitch: 60,
+                duration: 1000,
+            });
+            return;
+        }
 
         // If we have a map and a known coordinate for the first result, fly to it
         if (results.length > 0 && mapRef.current) {
@@ -190,8 +190,23 @@ export default function Product() {
                 duration: 1000,
             });
         }
+    }
+
+    function searchSpots() {
+        const q = searchQuery.trim().toLowerCase();
+        setDisplayedQuery(searchQuery);
+        const results = data.filter(item =>
+            item.name.toLowerCase().includes(q) ||
+            item.description.toLowerCase().includes(q) ||
+            item.tags.some(tag => tag.toLowerCase().includes(q))
+        );
+
+        setFilteredResults(results);
+
+        fitMapToResults(results, selectedItem);
+
         // If no results, fly to original center of campus.
-        else {
+        if (results.length === 0) {
             try {
                 mapRef.current.flyTo({ center: [174.770, -36.852], zoom: 15.5, pitch: 45 });
             } catch (err) {
@@ -218,14 +233,7 @@ export default function Product() {
 
     const handleItemUnselect = () => {
         setSelectedItem(null);
-        if (mapRef.current) {
-            mapRef.current.flyTo({
-                center: [174.770, -36.852],
-                zoom: 15.5,
-                pitch: 45,
-                duration: 1000,
-            });
-        }
+        fitMapToResults(filteredResults, null);
     }
 
     return (
@@ -333,8 +341,26 @@ export default function Product() {
                         </div>
                         <div className="flex h-full min-h-0 flex-col p-3 pt-4">
                             <div className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden pr-2">
-                                <div className="text-lg font-medium text-neutral-800 mb-4">
-                                    Showing available study spots for <span className="font-bold">"{displayedQuery}"</span>
+                                <div className="flex flex-row items-center gap-2 mb-4">
+                                    <div className="text-lg font-medium text-neutral-800">
+                                        Showing available study spots for <span className="font-bold">"{displayedQuery}"</span>
+                                    </div>
+                                    <div className="text-sm text-neutral-600">
+                                        <Tooltip label="Recenter map to show all results" withArrow>
+                                            <ActionIcon
+                                                size={24}
+                                                radius="xl"
+                                                color={theme.black}
+                                                variant="filled"
+                                                aria-label="Recenter map to show all results"
+                                                onClick={() => fitMapToResults(filteredResults, selectedItem)}
+                                            >
+                                                <span className="icon-wrapper transition-transform duration-100 hover:rotate-180">
+                                                    <IconCurrentLocation size={14} stroke={1.5} className="icon-outlined" />
+                                                </span>
+                                            </ActionIcon>
+                                        </Tooltip>
+                                    </div>
                                 </div>
                                 <SearchResults data={filteredResults} gridMode={gridMode} selection={{ current: selectedItem, select: handleItemSelect, unselect: handleItemUnselect }} />
                             </div>
